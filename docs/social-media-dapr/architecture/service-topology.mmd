@@ -1,0 +1,30 @@
+%% Last updated: 2026-05-03 04:45 Asia/Manila
+flowchart TB
+  subgraph AuthPod["auth-service container namespace"]
+    AuthApi["FastAPI app :8000"]
+    AuthDapr["daprd auth-service"]
+  end
+  subgraph UserPod["user-service container namespace"]
+    UserApi["FastAPI app :8000"]
+    UserDapr["daprd user-service"]
+  end
+  subgraph PostPod["post-service container namespace"]
+    PostApi["FastAPI app :8000"]
+    PostDapr["daprd post-service"]
+  end
+  subgraph CommentPod["comment-service container namespace"]
+    CommentApi["FastAPI app :8000"]
+    CommentDapr["daprd comment-service"]
+  end
+  subgraph NotificationPod["notification-service container namespace"]
+    NotificationApi["FastAPI app :8000"]
+    NotificationDapr["daprd notification-service"]
+  end
+  Redis["Redis"]
+
+  AuthDapr --- Redis
+  UserDapr --- Redis
+  PostDapr --- Redis
+  CommentDapr --- Redis
+  NotificationDapr --- Redis
+

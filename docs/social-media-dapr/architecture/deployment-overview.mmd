@@ -1,0 +1,19 @@
+%% Last updated: 2026-05-03 13:51 Asia/Manila
+flowchart LR
+  Compose["Docker Compose"]
+  DaprComponents["dapr/components"]
+  Redis["Redis"]
+  Postgres["Five PostgreSQL containers"]
+  PgHealth["PostgreSQL health checks"]
+  Services["Five FastAPI service containers"]
+  Sidecars["Five Dapr sidecars"]
+
+  Compose --> Services
+  Compose --> Sidecars
+  Compose --> Redis
+  Compose --> Postgres
+  Postgres --> PgHealth
+  PgHealth --> Services
+  Sidecars --> DaprComponents
+  Sidecars --> Redis
+  Services --> Postgres

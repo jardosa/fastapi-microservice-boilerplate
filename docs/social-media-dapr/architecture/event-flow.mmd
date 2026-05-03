@@ -1,0 +1,18 @@
+%% Last updated: 2026-05-03 04:45 Asia/Manila
+sequenceDiagram
+  participant Auth as Authentication Service
+  participant User as User Service
+  participant Post as Post Service
+  participant Comment as Comment Service
+  participant Notification as Notification Service
+  participant PubSub as Dapr Pub/Sub
+
+  Auth->>PubSub: auth.user_registered
+  PubSub->>User: create profile
+  Auth->>PubSub: auth.user_logged_in
+  PubSub->>User: set user online
+  Post->>PubSub: post.created
+  PubSub->>Notification: notify followers
+  Comment->>PubSub: comment.created
+  PubSub->>Notification: notify post owner
+

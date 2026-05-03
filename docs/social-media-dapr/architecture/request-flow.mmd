@@ -1,0 +1,18 @@
+%% Last updated: 2026-05-03 04:45 Asia/Manila
+sequenceDiagram
+  participant Client
+  participant Auth as Authentication Service
+  participant User as User Service
+  participant Post as Post Service
+  participant Comment as Comment Service
+  participant Notification as Notification Service
+
+  Client->>Auth: POST /auth/register
+  Client->>Auth: POST /auth/login
+  Client->>User: POST /users/{id}/follow
+  Client->>Post: POST /posts
+  Notification->>User: GET /users/{author_id}/followers via Dapr
+  Client->>Comment: POST /comments
+  Notification->>Post: GET /posts/{post_id} via Dapr
+  Client->>Notification: GET /notifications?user_id=...
+

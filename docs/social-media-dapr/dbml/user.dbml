@@ -1,0 +1,27 @@
+// Last updated: 2026-05-03 04:45 Asia/Manila
+Table user_profiles {
+  id varchar(36) [pk]
+  email varchar(320) [unique, not null]
+  display_name varchar(120)
+  bio varchar(500)
+  created_at datetime
+  updated_at datetime
+}
+
+Table user_follows {
+  id varchar(36) [pk]
+  follower_id varchar(36) [not null]
+  followed_id varchar(36) [not null]
+  created_at datetime
+}
+
+Table user_statuses {
+  user_id varchar(36) [pk]
+  status varchar(32) [not null]
+  updated_at datetime
+}
+
+Ref: user_follows.follower_id > user_profiles.id
+Ref: user_follows.followed_id > user_profiles.id
+Ref: user_statuses.user_id > user_profiles.id
+

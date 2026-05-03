@@ -1,0 +1,9 @@
+// Last updated: 2026-05-03 04:45 Asia/Manila
+Table comments {
+  id varchar(36) [pk]
+  post_id varchar(36) [not null]
+  author_id varchar(36) [not null]
+  content text [not null]
+  created_at datetime
+}
+

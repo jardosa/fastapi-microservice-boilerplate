@@ -1,0 +1,9 @@
+// Last updated: 2026-05-03 04:45 Asia/Manila
+Table posts {
+  id varchar(36) [pk]
+  author_id varchar(36) [not null]
+  content text [not null]
+  created_at datetime
+  updated_at datetime
+}
+

@@ -1,0 +1,33 @@
+%% Last updated: 2026-05-03 04:45 Asia/Manila
+flowchart LR
+  Client["API Client"]
+  Auth["Authentication Service"]
+  User["User Service"]
+  Post["Post Service"]
+  Comment["Comment Service"]
+  Notification["Notification Service"]
+  Redis["Redis Pub/Sub"]
+  AuthDB[("Auth DB")]
+  UserDB[("User DB")]
+  PostDB[("Post DB")]
+  CommentDB[("Comment DB")]
+  NotificationDB[("Notification DB")]
+
+  Client --> Auth
+  Client --> User
+  Client --> Post
+  Client --> Comment
+  Client --> Notification
+  Auth --> AuthDB
+  User --> UserDB
+  Post --> PostDB
+  Comment --> CommentDB
+  Notification --> NotificationDB
+  Auth --> Redis
+  Post --> Redis
+  Comment --> Redis
+  Redis --> User
+  Redis --> Notification
+  Notification -->|"Dapr service invocation"| User
+  Notification -->|"Dapr service invocation"| Post
+

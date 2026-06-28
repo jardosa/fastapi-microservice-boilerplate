@@ -1,6 +1,6 @@
 # Process Overview
 
-Last updated: 2026-05-03 14:32 Asia/Manila
+Last updated: 2026-05-03 23:18 Asia/Manila
 
 This living document explains how requests, events, and service-to-service calls move through the system. Update this file whenever routing, API gateway behavior, Dapr invocation, pub/sub topics, service ownership, or deployment topology changes.
 
@@ -99,6 +99,10 @@ Client
   -> Notification DB: create notifications for followers
 ```
 
+Notification rows are created only when the post `author_id` has followers in User Service. To verify this flow, create a follow relationship where the future notification recipient follows the post author, then create the post with the followed user's ID as `author_id`.
+
+Post-created notifications are eventually consistent. `POST /posts` returns after the post is stored and the `post.created` event is accepted by Dapr; Notification Service processes the event asynchronously. In local testing, poll `GET /notifications?user_id=...` for a few seconds instead of checking only once immediately after post creation.
+
 ### Create Comment
 
 ```text
@@ -184,4 +188,3 @@ Update this file when any of these change:
 - Dapr invocation paths change.
 - Pub/sub topics or event consumers change.
 - Load balancing or replica strategy changes.
-

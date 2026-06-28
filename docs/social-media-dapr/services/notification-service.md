@@ -1,6 +1,6 @@
 # Notification Service
 
-Last updated: 2026-05-03 04:45 Asia/Manila
+Last updated: 2026-05-03 23:18 Asia/Manila
 
 ## Responsibilities
 
@@ -8,6 +8,8 @@ Last updated: 2026-05-03 04:45 Asia/Manila
 - Resolve recipients through Dapr service invocation.
 - Store notifications.
 - Expose notification read APIs.
+- Log event receipt, recipient resolution counts, and notification creation.
+- Notifications are created asynchronously after Dapr delivers events, so clients should treat them as eventually consistent.
 
 ## Endpoints
 
@@ -19,4 +21,3 @@ Last updated: 2026-05-03 04:45 Asia/Manila
 
 - `post.created`
 - `comment.created`
-

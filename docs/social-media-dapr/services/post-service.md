@@ -1,12 +1,13 @@
 # Post Service
 
-Last updated: 2026-05-03 04:45 Asia/Manila
+Last updated: 2026-05-03 23:18 Asia/Manila
 
 ## Responsibilities
 
 - Store posts.
 - Provide post CRUD endpoints.
 - Publish post-created events.
+- Log post-created publish success with `post_id` and `author_id`.
 
 ## Endpoints
 
@@ -20,4 +21,3 @@ Last updated: 2026-05-03 04:45 Asia/Manila
 ## Events Published
 
 - `post.created`
-

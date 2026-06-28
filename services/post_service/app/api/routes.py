@@ -1,5 +1,6 @@
 from uuid import UUID
 
+import logging
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.orm import Session
 
@@ -10,6 +11,7 @@ from shared.contracts.events.posts import PostCreatedEvent
 from shared.dapr.client import publish_event
 
 router = APIRouter()
+logger = logging.getLogger("uvicorn.error")
 
 
 def to_response(post) -> PostResponse:
@@ -25,10 +27,9 @@ def to_response(post) -> PostResponse:
 @router.post("/posts", response_model=PostResponse, status_code=status.HTTP_201_CREATED)
 async def create(payload: PostCreate, db: Session = Depends(get_db)):
     post = create_post(db, payload.author_id, payload.content)
-    await publish_event(
-        "post.created",
-        PostCreatedEvent(post_id=UUID(post.id), author_id=UUID(post.author_id), content_preview=content_preview(post.content)),
-    )
+    event = PostCreatedEvent(post_id=UUID(post.id), author_id=UUID(post.author_id), content_preview=content_preview(post.content))
+    await publish_event("post.created", event)
+    logger.info("Created post and published post.created post_id=%s author_id=%s", post.id, post.author_id)
     return to_response(post)
 
 
